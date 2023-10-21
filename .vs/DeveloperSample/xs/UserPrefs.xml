@@ -1,0 +1,33 @@
+﻿<Properties StartupConfiguration="{9D4FC98B-6053-4B3D-974E-190D6B82CEA8}|Default">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.DeveloperSample PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ClassRefactoring/ClassRefactorTest.cs">
+    <Files>
+      <File FileName="ClassRefactoring/ClassRefactor.cs" />
+      <File FileName="ClassRefactoring/ClassRefactorTest.cs" Line="20" Column="52" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="DeveloperSample">
+            <Node name="DeveloperSample">
+              <Node name="ClassRefactoring" expanded="True">
+                <Node name="ClassRefactorTest.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="DeveloperSample" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
