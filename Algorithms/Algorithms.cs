@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace DeveloperSample.Algorithms
 {
@@ -17,19 +18,28 @@ namespace DeveloperSample.Algorithms
 
         public static string FormatSeparators(params string[] items)
         {
-            string returnString = "";
+            if (items == null || items.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            StringBuilder returnString = new StringBuilder();
+
             for (int i = 0; i < items.Length; i++)
             {
-                if (i == items.Length - 1)
+                returnString.Append(items[i]);
+
+                if (i < items.Length - 2)
                 {
-                    returnString += items[i - 1] + " and " + items[i];
+                    returnString.Append(", ");
                 }
-                else if (i != items.Length - 2)
+                else if (i == items.Length - 2)
                 {
-                    returnString += items[i] + ", ";
+                    returnString.Append(" and ");
                 }
             }
-            return returnString;
+
+            return returnString.ToString();
         }
     }
 }
