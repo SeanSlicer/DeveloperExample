@@ -9,16 +9,35 @@ namespace DeveloperSample.Syncing
 {
     public class SyncDebug
     {
+        //if you really want it async
+        // public List<string> InitializeList(IEnumerable<string> items)
+        // {
+        //     var bag = new ConcurrentBag<string>();
+
+        //     var options = new ParallelOptions
+        //     {
+        //         MaxDegreeOfParallelism = Environment.ProcessorCount
+        //     };
+
+        //     Parallel
+        //         .ForEachAsync(
+        //             items,
+        //             options,
+        //             async (i, cancellationToken) =>
+        //             {
+        //                 var r = await Task.Run(() => i).ConfigureAwait(false);
+        //                 bag.Add(r);
+        //             }
+        //         )
+        //         .Wait();
+
+        //     return bag.ToList();
+        // }
+
         public List<string> InitializeList(IEnumerable<string> items)
         {
             var bag = new ConcurrentBag<string>();
-            Parallel.ForEach(
-                items,
-                i =>
-                {
-                    bag.Add(i);
-                }
-            );
+            Parallel.ForEach(items, bag.Add);
             var list = bag.ToList();
             return list;
         }

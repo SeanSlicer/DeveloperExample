@@ -5,16 +5,16 @@ namespace DeveloperSample.Container
 {
     public class Container
     {
-        Dictionary<Type, Type> hi = new Dictionary<Type, Type>();
+        Dictionary<Type, Type> typeBindings = new Dictionary<Type, Type>();
 
         public void Bind(Type interfaceType, Type implementationType)
         {
-            hi.Add(interfaceType, implementationType);
+            typeBindings.Add(interfaceType, implementationType);
         }
 
         public T Get<T>()
         {
-            return (T)Activator.CreateInstance(hi[typeof(T)]);
+            return (T)Activator.CreateInstance(typeBindings[typeof(T)]);
         }
     }
 }
