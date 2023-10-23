@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./LoginAttemptList.css";
+import "./css/LoginAttemptList.css";
 
 const LoginAttempt = ({ username, password }) => (
-  <li>{`Login: ${username}, Password: ${password}`}</li>
+  <li className="Login-Attempt">{`Login: ${username} Password: ${password}`}</li>
 );
 
 const LoginAttemptList = (props) => {

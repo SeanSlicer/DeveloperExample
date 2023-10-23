@@ -2,14 +2,21 @@ using System;
 
 namespace DeveloperSample.ClassRefactoring
 {
+    public interface IBird
+    {
+        double GetAirspeedVelocity();
+    }
+
     public enum SwallowType
     {
-        African, European
+        African,
+        European
     }
 
     public enum SwallowLoad
     {
-        None, Coconut
+        None,
+        Coconut
     }
 
     public class SwallowFactory
@@ -17,7 +24,7 @@ namespace DeveloperSample.ClassRefactoring
         public Swallow GetSwallow(SwallowType swallowType) => new Swallow(swallowType);
     }
 
-    public class Swallow
+    public class Swallow : IBird
     {
         public SwallowType Type { get; }
         public SwallowLoad Load { get; private set; }
@@ -34,23 +41,32 @@ namespace DeveloperSample.ClassRefactoring
 
         public double GetAirspeedVelocity()
         {
-            if (Type == SwallowType.African && Load == SwallowLoad.None)
+            return Type switch
             {
-                return 22;
-            }
-            if (Type == SwallowType.African && Load == SwallowLoad.Coconut)
+                SwallowType.African => CalculateAirspeedForAfrican(),
+                SwallowType.European => CalculateAirspeedForEuropean(),
+                _ => throw new InvalidOperationException(),
+            };
+        }
+
+        private double CalculateAirspeedForAfrican()
+        {
+            return Load switch
             {
-                return 18;
-            }
-            if (Type == SwallowType.European && Load == SwallowLoad.None)
+                SwallowLoad.None => 22,
+                SwallowLoad.Coconut => (double)18,
+                _ => throw new InvalidOperationException(),
+            };
+        }
+
+        private double CalculateAirspeedForEuropean()
+        {
+            return Load switch
             {
-                return 20;
-            }
-            if (Type == SwallowType.European && Load == SwallowLoad.Coconut)
-            {
-                return 16;
-            }
-            throw new InvalidOperationException();
+                SwallowLoad.None => 20,
+                SwallowLoad.Coconut => (double)16,
+                _ => throw new InvalidOperationException(),
+            };
         }
     }
 }

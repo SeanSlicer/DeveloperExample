@@ -1,9 +1,8 @@
+import LoginForm from "./Auth/LoginForm";
+import LoginAttemptList from "./Auth/LoginAttemptList";
 import React, { useState } from "react";
-import "./App.css";
-import LoginForm from "./LoginForm";
-import LoginAttemptList from "./LoginAttemptList";
 
-const App = () => {
+const LoginAttemptForm = () => {
   const [loginAttempts, setLoginAttempts] = useState([]);
 
   const handleLoginAttempt = ({ username, password }) => {
@@ -11,13 +10,12 @@ const App = () => {
     const newLoginAttempts = [...loginAttempts, { username, password }];
     setLoginAttempts(newLoginAttempts);
   };
-
   return (
-    <div className="App">
+    <>
       <LoginForm onSubmit={handleLoginAttempt} />
       <LoginAttemptList attempts={loginAttempts} />
-    </div>
+    </>
   );
 };
 
-export default App;
+export default LoginAttemptForm;
