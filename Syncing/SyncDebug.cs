@@ -9,27 +9,21 @@ namespace DeveloperSample.Syncing
 {
     public class SyncDebug
     {
-        //if you really want it async
-        // public List<string> InitializeList(IEnumerable<string> items)
+       // if you really want it async
+        // public async Task<List<string>> InitializeList(IEnumerable<string> items)
         // {
         //     var bag = new ConcurrentBag<string>();
 
-        //     var options = new ParallelOptions
-        //     {
-        //         MaxDegreeOfParallelism = Environment.ProcessorCount
-        //     };
-
-        //     Parallel
+        //     await Parallel
         //         .ForEachAsync(
         //             items,
-        //             options,
         //             async (i, cancellationToken) =>
         //             {
         //                 var r = await Task.Run(() => i).ConfigureAwait(false);
         //                 bag.Add(r);
         //             }
-        //         )
-        //         .Wait();
+        //         );
+                
 
         //     return bag.ToList();
         // }
@@ -73,7 +67,7 @@ namespace DeveloperSample.Syncing
                 thread.Join();
             }
 
-            return concurrentDictionary.ToDictionary(kv => kv.Key, kv => kv.Value);
+            return concurrentDictionary.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
     }
 }

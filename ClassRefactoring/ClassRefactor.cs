@@ -21,52 +21,43 @@ namespace DeveloperSample.ClassRefactoring
 
     public class SwallowFactory
     {
-        public Swallow GetSwallow(SwallowType swallowType) => new Swallow(swallowType);
+        public Swallow GetSwallow(SwallowType swallowType) => swallowType switch
+        {
+            SwallowType.African => new AfricanSwallow(),
+            SwallowType.European => new EuropeanSwallow(),
+            _ => throw new ArgumentException("Bad swallow type.")
+        };
     }
 
-    public class Swallow : IBird
+    public abstract class Swallow : IBird
     {
-        public SwallowType Type { get; }
         public SwallowLoad Load { get; private set; }
-
-        public Swallow(SwallowType swallowType)
-        {
-            Type = swallowType;
-        }
 
         public void ApplyLoad(SwallowLoad load)
         {
             Load = load;
         }
 
-        public double GetAirspeedVelocity()
-        {
-            return Type switch
-            {
-                SwallowType.African => CalculateAirspeedForAfrican(),
-                SwallowType.European => CalculateAirspeedForEuropean(),
-                _ => throw new InvalidOperationException(),
-            };
-        }
+        public abstract double GetAirspeedVelocity();
+    }
 
-        private double CalculateAirspeedForAfrican()
+    public class AfricanSwallow : Swallow
+    {
+        public override double GetAirspeedVelocity() => Load switch
         {
-            return Load switch
-            {
-                SwallowLoad.None => 22,
-                SwallowLoad.Coconut => (double)18,
-                _ => throw new InvalidOperationException(),
-            };
-        }
+            SwallowLoad.None => 22,
+            SwallowLoad.Coconut => 18D,
+            _ => throw new InvalidOperationException(),
+        };
+    }
 
-        private double CalculateAirspeedForEuropean()
+    public class EuropeanSwallow : Swallow
+    {
+        public override double GetAirspeedVelocity() => Load switch
         {
-            return Load switch
-            {
-                SwallowLoad.None => 20,
-                SwallowLoad.Coconut => (double)16,
-                _ => throw new InvalidOperationException(),
-            };
-        }
+            SwallowLoad.None => 20,
+            SwallowLoad.Coconut => 16D,
+            _ => throw new InvalidOperationException(),
+        };
     }
 }
