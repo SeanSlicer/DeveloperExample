@@ -31,6 +31,7 @@ namespace DeveloperSample.ClassRefactoring
 
     public abstract class Swallow : IBird
     {
+        protected double BaseAirspeedVelocity { get; set; } = 0;
         public SwallowLoad Load { get; private set; }
 
         public void ApplyLoad(SwallowLoad load)
@@ -38,26 +39,30 @@ namespace DeveloperSample.ClassRefactoring
             Load = load;
         }
 
-        public abstract double GetAirspeedVelocity();
+        public double GetAirspeedVelocity()
+        {
+            return Load switch 
+            {
+                SwallowLoad.None => BaseAirspeedVelocity,
+                SwallowLoad.Coconut => BaseAirspeedVelocity -4D,
+                _ => throw new InvalidOperationException(),
+            };
+        }
     }
 
     public class AfricanSwallow : Swallow
     {
-        public override double GetAirspeedVelocity() => Load switch
+        public AfricanSwallow()
         {
-            SwallowLoad.None => 22,
-            SwallowLoad.Coconut => 18D,
-            _ => throw new InvalidOperationException(),
-        };
+        BaseAirspeedVelocity = 22;
+        } 
     }
 
     public class EuropeanSwallow : Swallow
     {
-        public override double GetAirspeedVelocity() => Load switch
+        public EuropeanSwallow()
         {
-            SwallowLoad.None => 20,
-            SwallowLoad.Coconut => 16D,
-            _ => throw new InvalidOperationException(),
-        };
+        BaseAirspeedVelocity = 20;
+        }
     }
 }
