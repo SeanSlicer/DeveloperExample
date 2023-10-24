@@ -19,10 +19,30 @@ namespace DeveloperSample.ClassRefactoring
         Coconut
     }
 
-    public abstract class Load
+public interface ILoad
+{
+    double ApplyLoad(double baseAirspeedVelocity);
+}
+
+public abstract class Load : ILoad
+{
+    public abstract double ApplyLoad(double baseAirspeedVelocity);
+}
+
+public interface ILoadFactory
+{
+    ILoad GetLoad(SwallowLoad load);
+}
+
+public class LoadFactory : ILoadFactory
+{
+    public ILoad GetLoad(SwallowLoad load) => load switch
     {
-        public abstract double ApplyLoad(double baseAirspeedVelocity);
-    }
+        SwallowLoad.None => new NoLoad(),
+        SwallowLoad.Coconut => new CoconutLoad(),
+        _ => throw new ArgumentException("Bad load type.")
+    };
+}
 
     public class NoLoad : Load
     {
@@ -44,47 +64,53 @@ namespace DeveloperSample.ClassRefactoring
 
     public class SwallowFactory
     {
+        private readonly ILoadFactory _loadFactory;
+
+    public SwallowFactory(ILoadFactory factory = null) => _loadFactory = factory ?? new LoadFactory();
         public Swallow GetSwallow(SwallowType swallowType) => swallowType switch
-        {
-            SwallowType.African => new AfricanSwallow(),
-            SwallowType.European => new EuropeanSwallow(),
-            _ => throw new ArgumentException("Bad swallow type.")
-        };
-    }
-
-    public abstract class Swallow : IBird
     {
-        protected double BaseAirspeedVelocity { get; set; } = 0;
-        public Load Load { get; private set; } = new NoLoad();
-
-        public void ApplyLoad(SwallowLoad load)
-        {
-            Load = load switch
-            {
-                SwallowLoad.Coconut => new CoconutLoad(),
-                _ => throw new ArgumentException("Bad load type.")
-            };
-        }
-
-        public double GetAirspeedVelocity()
-        {
-            return Load.ApplyLoad(BaseAirspeedVelocity);
-        }
+        SwallowType.African => new AfricanSwallow(_loadFactory),
+        SwallowType.European => new EuropeanSwallow(_loadFactory),
+        _ => throw new ArgumentException("Bad swallow type.")
+    };
     }
+    
+    public abstract class Swallow : IBird
+{
+    private readonly ILoadFactory _loadFactory;
+
+    protected Swallow(double baseAirspeedVelocity, ILoadFactory loadFactory)
+    {
+        BaseAirspeedVelocity = baseAirspeedVelocity;
+        _loadFactory = loadFactory;
+        Load = _loadFactory.GetLoad(SwallowLoad.None);
+    }
+
+    protected double BaseAirspeedVelocity { get; set; } = 0;
+    public ILoad Load { get; private set; }
+
+    public void ApplyLoad(SwallowLoad load) => Load = _loadFactory.GetLoad(load);
+
+    public double GetAirspeedVelocity()
+    {
+        return Load.ApplyLoad(BaseAirspeedVelocity);
+    }
+}
+
 
     public class AfricanSwallow : Swallow
+{
+    public AfricanSwallow(ILoadFactory factory)
+        : base(22D, factory)
     {
-        public AfricanSwallow()
-        {
-            BaseAirspeedVelocity = 22D;
-        }
     }
+}
 
     public class EuropeanSwallow : Swallow
+{
+    public EuropeanSwallow(ILoadFactory factory)
+        : base(20D, factory)
     {
-        public EuropeanSwallow()
-        {
-            BaseAirspeedVelocity = 20D;
-        }
     }
+}
 }

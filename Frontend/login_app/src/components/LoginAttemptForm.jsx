@@ -6,7 +6,6 @@ const LoginAttemptForm = () => {
   const [loginAttempts, setLoginAttempts] = useState([]);
 
   const handleLoginAttempt = ({ username, password }) => {
-    // Log the login attempt
     const newLoginAttempts = [...loginAttempts, { username, password }];
     setLoginAttempts(newLoginAttempts);
   };
