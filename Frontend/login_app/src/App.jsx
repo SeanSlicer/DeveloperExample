@@ -1,12 +1,16 @@
 import React from "react";
-import "./css/App.css";
 import LoginAttemptForm from "./components/LoginAttemptForm";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <div className="App">
-      <LoginAttemptForm />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className="text-center">
+        <LoginAttemptForm />
+      </div>
+    </QueryClientProvider>
   );
 };
 
