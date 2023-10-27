@@ -1,5 +1,5 @@
-import LoginForm from "./Auth/LoginForm";
-import LoginAttemptList from "./Auth/LoginAttemptList";
+import LoginForm from "./LoginForm";
+import LoginAttemptList from "./LoginAttemptList";
 import React, { useState } from "react";
 
 const LoginAttemptForm = () => {

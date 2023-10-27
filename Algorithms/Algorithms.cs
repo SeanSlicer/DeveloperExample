@@ -23,7 +23,7 @@ namespace DeveloperSample.Algorithms
                 return string.Empty;
             }
 
-            StringBuilder returnString = new StringBuilder();
+            StringBuilder returnString = new();
 
             for (int i = 0; i < items.Length; i++)
             {

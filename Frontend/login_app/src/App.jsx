@@ -1,5 +1,5 @@
 import React from "react";
-import LoginAttemptForm from "./components/LoginAttemptForm";
+import LoginAttemptForm from "./components/Auth/LoginAttemptForm";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
