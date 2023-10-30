@@ -9,7 +9,7 @@ namespace DeveloperSample.Syncing
 {
     public class SyncDebug
     {
-       // if you really want it async
+        // if you really want it async
         // public async Task<List<string>> InitializeList(IEnumerable<string> items)
         // {
         //     var bag = new ConcurrentBag<string>();
@@ -23,7 +23,7 @@ namespace DeveloperSample.Syncing
         //                 bag.Add(r);
         //             }
         //         );
-                
+
 
         //     return bag.ToList();
         // }

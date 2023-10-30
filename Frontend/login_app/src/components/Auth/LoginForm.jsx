@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useStoreLoginAttempt } from "../../hooks/auth/useStoreLoginAttempt";
 
 const LoginForm = ({ onSubmit }) => {
   const [username, setUsername] = useState("");
@@ -8,7 +7,7 @@ const LoginForm = ({ onSubmit }) => {
   const [passwordWarning, setPasswordWarning] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     setUsernameWarning("");
@@ -26,16 +25,27 @@ const LoginForm = ({ onSubmit }) => {
         setPasswordWarning("Password field cannot be blank");
         break;
       default:
-        // Both fields are non-empty, proceed with the login
         setIsLoggingIn(true);
 
-        // Pass login details to the parent component after a brief delay
-        setTimeout(() => {
-          onSubmit({ username: username, password: password });
+        try {
+          const loginDetails = await new Promise((resolve, reject) => {
+            setTimeout(() => {
+              if (username === "hi" && password === "hi") {
+                resolve({ username, password });
+              } else {
+                reject("Invalid username or password");
+              }
+            }, 1000);
+          });
+
+          onSubmit(loginDetails);
           setUsername("");
           setPassword("");
+        } catch (error) {
+          console.error(error);
+        } finally {
           setIsLoggingIn(false);
-        }, 1000); // Adjust the delay as needed
+        }
     }
   };
 
